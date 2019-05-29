@@ -61,6 +61,8 @@ const selectedNode = '2';
 
 /**
  * 
+ * Note: 此方法会直接修改传入的数组对象，并未对传入对象做拷贝
+ * 
  * @param {Object} treeData 当前树节点数组
  * @param {String} selectedNode 当前选中的节点ID 
  */
