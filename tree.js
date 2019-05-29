@@ -69,8 +69,7 @@ const traversingNode = (treeData, selectedNode) => {
     for (let i = 0; i < treeData.length; i++) {
         if (treeData[i].id === selectedNode) {
             // 当前对象为选中对象,更改选中状态，并立即通知父节点，不再查找其他节点，此同级节点循环结束
-            treeData[i].selected = true;
-            treeData[i].expand = true;
+            nodeSelected(treeData[i]);
             return true;
         } else if (treeData[i].children && treeData[i].children.length !== 0) {
             // 判断当前节点下是否有子节点
@@ -78,16 +77,13 @@ const traversingNode = (treeData, selectedNode) => {
 
             // 根据查找状态，更改父节点选中状态
             if (traversingStatus) {
-                treeData[i].selected = true;
-                treeData[i].expand = true;
+                nodeSelected(treeData[i]);
             } else {
-                treeData[i].selected = false;
-                treeData[i].expand = false;
+                nodeUnSelected(treeData[i]);
             }
         }else {
             // 当前未匹配到选中节点，并且也不存在子节点时，设置本身状态，并通知父节点，但需要查找其他节点是否满足条件
-            treeData[i].selected = false;
-            treeData[i].expand = false;
+            nodeUnSelected(treeData[i]);
             traversingStatus = false;
         }
     }
