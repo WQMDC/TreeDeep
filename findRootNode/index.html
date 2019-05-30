@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function deep (arr, targetId) {
+            let c = []
+            arr.forEach(item => {
+                let b = null;
+                if(item.id === targetId) {
+                    b = item.id;
+                }else {
+                    if(item.children && item.children.length !== 0) {
+                        if(deep(item.children, targetId).length != 0) {
+                            b = item.id;
+                        } else {
+                            deep(item.children, targetId)
+                        }
+                    }
+                }
+                if(b && b !== undefined) {
+                    if(b instanceof Array) {
+                        if(b.length !== 0) {
+                            c = c.concat(b);
+                        }
+                    }else {
+                        c.push(b);
+                    }
+                }
+            })
+            return c;
+        }
+
+        const a = [{
+            id: '1',
+            name: '1Name',
+            children: [
+                {
+                    id: '1-1',
+                    name: '1-1Name',
+                    children: [
+                        {
+                            id: '1-1-1',
+                            name: '1-1-1Name',
+                        },
+                        {
+                            id: '1-1-2',
+                            name: '1-1-2Name',
+                        },
+                        {
+                            id: '1-1-3',
+                            name: '1-1-3Name',
+                        }
+                    ]
+                },
+                {
+                    id:'1-2',
+                    name: '1-2Name',
+                    children: [
+                        {
+                            id: '1-2-1',
+                            name: '1-2-1Name',
+                        },
+                        {
+                            id: '1-2-2',
+                            name: '1-2-2Name',
+                        },
+                        {
+                            id: '1-2-3',
+                            name: '1-2-3Name',
+                        }
+                    ]
+                }
+            ]
+        },{
+            id: '2',
+            name: '2Name',
+            children: [{
+                id: '2-1',
+                name: '2-1Name',
+                children: [
+                    {
+                        id: '2-1-1',
+                        name: '2-1-1Name'
+                    }
+                ]
+            }]
+        }]
+        const currentId = '2-1-1';
+        const aDeep = deep(a, currentId);
+        console.log(aDeep);
+    </script>
+</body>
+</html>
