@@ -53,7 +53,21 @@ const data = [
     {
         id: '2',
         selected: false,
-        expand: false
+        expand: false,
+        children: [{
+            id: '2-1',
+            selected: false,
+            expand: false,
+            children: [{
+                id: '2-1-1',
+                selected: false,
+                expand: false
+            }]
+        }, {
+            id: '2-2',
+            selected: false,
+            expand: false
+        }]
     }
 ];
 
@@ -67,7 +81,7 @@ const selectedNode = '2';
  * @param {String} selectedNode 当前选中的节点ID 
  */
 const traverseNode = (treeData, selectedNode) => {
-    let nodeStatus = false; 
+    let nodeStatus = false;
     for (let i = 0; i < treeData.length; i++) {
         if (treeData[i].id === selectedNode) {
             // 当前对象为选中对象,更改选中状态，并立即通知父节点，不再查找其他节点，此同级节点循环结束
@@ -80,6 +94,7 @@ const traverseNode = (treeData, selectedNode) => {
             // 根据查找状态，更改父节点选中状态
             if (nodeStatus) {
                 setSelectedNodeStatus(treeData[i]);
+                return nodeStatus;
             } else {
                 setUnselectedNodeStatus(treeData[i]);
             }
@@ -106,10 +121,14 @@ const setUnselectedNodeStatus = (node) => {
     })
 }
 
-traverseNode(data, selectedNode);
+// traverseNode(data, selectedNode);
 
-console.log(data, 'current node is 2');
+// console.log(data, 'current node is 2');
 
 traverseNode(data, '1-1');
 
 console.log(data, 'current node is 1-1');
+
+traverseNode(data, '2-1-1');
+
+console.log(data, 'current node is 2-1-1');
